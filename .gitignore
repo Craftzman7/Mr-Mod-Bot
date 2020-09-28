@@ -1,2 +1,6 @@
 database.sqlite
 package-lock.json
+package.json
+swears.json
+config.json
+node_modules
