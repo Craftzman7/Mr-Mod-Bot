@@ -8,8 +8,6 @@ const SelfReloadJSON = require('self-reload-json');
 const profanities = require('./swears.json');
 const racialSlur = require('./swears.json');
 const snekfetch = require('snekfetch');
-let settingsFile = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-let settings = new SelfReloadJSON(__dirname + '/settings.json');
 let modlog = new SelfReloadJSON(__dirname + '/modlog.json');
 let welcome = new SelfReloadJSON(__dirname + '/welcome.json');
 var weather = require('weather-js');
@@ -23,55 +21,13 @@ client.on('ready', () => {
 
 })
 
-
-client.on('message', message => {
-  if (!message.guild) return; 
-
-    if(!settings[message.guild.id]){
-    settings[message.guild.id] = {
-    	prefix: config.prefix
-    };
    
-client.on('error', console.error);
 
-let prefix = settings[message.guild.id].prefix;
-
-}
-});
-
-
-
-client.on('error', console.error);
-
-//custom prefix  
-
-   client.on('message', async message => {
-let prefix = settings[message.guild.id].prefix;
- var command = message.content.toLowerCase().slice(prefix.length).split(' ')[0];
-    var args = message.content.split(' ').slice(1);
-  if (!message.guild) return console.log('Command Used in DM\'s'); 
-   if (!message.content.startsWith(prefix) || message.author.bot) return;
-   if (command ==='prefix') {
-   	if (!message.member.hasPermission("MANAGE_GUILD")) return message.reply('You do not have permission to do this! You need \`Mannage Server\` permission.');
-   	if(!args[0]) return message.reply('You didn\'t specify a prefix');
-message.reply(`**Prefix was changed!**`);
-
-   	let settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
-    settings[message.guild.id] = {
-    	prefix: args[0]
-    };
-    
-    fs.writeFile('./settings.json', JSON.stringify(settings), (err) => {
-    if(err) console.log(err);
-});
-
-
-}
-}); 	
+	
 
 // custom modlog
    client.on('message', async message => {
-let prefix = settings[message.guild.id].prefix;
+let prefix = [message.guild.id].prefix;
  var command = message.content.toLowerCase().slice(prefix.length).split(' ')[0];
     var args = message.content.split(' ').slice(1);
   if (!message.guild) return console.log('Command Used in DM\'s'); 
@@ -97,7 +53,7 @@ message.reply(`**Channel Set!**`);
 
 
    client.on('message', async message => {
-let prefix = settings[message.guild.id].prefix;
+let prefix = config.prefix
  var command = message.content.toLowerCase().slice(prefix.length).split(' ')[0];
     var args = message.content.split(' ').slice(1);
   if (!message.guild) return console.log('Command Used in DM\'s'); 
@@ -173,7 +129,7 @@ client.on('guildMemberRemove', member => {
 
 //Messages Respond
 client.on('message', message => {
-let prefix = settings[message.guild.id].prefix;
+let prefix = config.prefix
  
   if (message.content === 'hi') {
     message.channel.send('sup');
@@ -222,20 +178,8 @@ if (message.content === '<@547978397163192320> prefix') {
  if (message.content === `${prefix}help`) {	
   	if (message.author.bot) return;
    if (!message.guild) return console.log('Command Used in DM\'s');  
-  const embed = new MessageEmbed()
+  const embed = new message()
   .setAuthor(`${client.user.tag}`)
-  .setDescription(`**Your server prefix is \`${prefix}\`**`)
-  .addField('Money Commands',`
-- "balance/bal" displays your balance
-- "daily" collects your daily
-- "dice" rolls a dice for money
-- "coinflip" flips a coin for money
-- "transfer" gives another user money
-- "work [storekeeper or cashier]" can give you money
-- "delete" (admin only) deletes all of specified users money`, true)
-.addField('XP Commands',`
-- "profile" Shows your level and XP
- **The Leaderboard Command is being fixed**`, true)
 .addField('Moderation Commands',`
 **In order to use commands here, you must have the permission of what the bot is doing.**
 - "ping" sends the ping in ms
@@ -245,18 +189,13 @@ if (message.content === '<@547978397163192320> prefix') {
 - "ban" bans mentioned member
 - "suggest" suggest a command or bug fix. | Usage: \`${prefix}\`suggest [suggestion]
 - "status" shows current status of the bot
-- "prefix" sets the server prefix | Usage: \`${prefix}\`prefix [new prefix]
-- "setup" shows help for setting up guild settings.
-- "settings" shows you'r guilds settigs.`, true)
-  .addField('Fun', `
-  	- "meme" sends a random dank meme from Reddit`)
+- "setup" shows help for setting up guild config.
+- "config" shows you'r guilds settigs.`, true)
   .addField('Bug Fixes',`
-  	-Required Permission Bug: Solved
-  	-Missing Permissions: Solved, Wrong bot invite link provided on dbl
-  	**Make sure to give Jerome Administrator Permission**
-  	-If there is a bug pls let me know on the support server`)
+  	**Make sure to give Mr Mod Bot Administrator Permission**
+  	-If there is a bug please let me know on the support server`)
   .addField('Command Suggestions', `Please let me know if you have any command suggestions. Using the "\`${prefix}\`suggest" command`)
-  .setFooter('commands updated 5/13/2019')
+  .setFooter('commands updated 9/28/20')
   .setColor(0xe0b533)
 message.author.send(embed);
 message.react('📩');
@@ -265,7 +204,7 @@ message.react('📩');
 
 //kick
 client.on('message', message => {
-let prefix = settings[message.guild.id].prefix;
+let prefix = config.prefix
   var args = message.content.split(' ').slice(1);
  
  //This is the log channel 
@@ -428,15 +367,15 @@ modlogChannel.send(embed);
 
 
 client.on('ready', () => {
-client.user.setActivity('jeromebot.gq | j.help', { type: 'WATCHING' });
+client.user.setActivity('for 1help', { type: 'WATCHING' });
 });
 //set activity command
    client.on('message', async message => {
- let prefix = settings[message.guild.id].prefix;
+ let prefix = config.prefix
  var command = message.content.toLowerCase().slice(prefix.length).split(' ')[0];
     var args = message.content.split(' ').slice(1);
    if (!message.content.startsWith(prefix) || message.author.bot) return;
-    if (message.author.id !== '537808581496537108') return;
+    if (message.author.id !== '517704267889639446', '542572136112324629') return;
 if (command ==='setpresence') {
 
 client.user.setActivity(args.join(' '));
@@ -486,7 +425,7 @@ message.reply('status set!');
 });
 
 client.on('message', async message => {
- let prefix = settings[message.guild.id].prefix;
+ let prefix = config.prefix
  var command = message.content.toLowerCase().slice(prefix.length).split(' ')[0];
     var args = message.content.split(' ').slice(1);
    if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -503,306 +442,11 @@ if (command ==='clear') {
         clear();
     }
 });
-//economy$$$
-
- 
-//Whenever someone types a message this gets activated.
-//(If you use 'await' in your functions make sure you put async here)
-client.on('message', async message => {
- 
- let prefix = settings[message.guild.id].prefix;
-  //This reads the first part of your message behind your prefix to see which command you want to use.
-  var command = message.content.toLowerCase().slice(prefix.length).split(' ')[0];
- 
-  //These are the arguments behind the commands.
-  var args = message.content.split(' ').slice(1);
- 
-   if (!message.guild) return console.log('Command Used in DM\'s'); 
-
- var cooldownEmbed = new Discord.MessageEmbed()
- .setTitle('Command Cooldown')
- .setAuthor(client.user.tag, client.user.avatarURL)
- .setTimestamp()
- .setDescription('Woah, way to fast there!')
- .addField('Command Type', 'Economy')
- .addField('Command', `\`${command}\``)
- .addField('Cooldown', "\`5 seconds\`")
- .setColor(0xf44274);
-  //If the message does not start with your prefix return.
-  //If the user that types a message is a bot account return.
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
-  if(cooldown.has(message.author.id)){
-    message.delete();
-    return message.channel.send(cooldownEmbed);
-  }
-  if(!cooldown.has(message.author.id)){
-    cooldown.add(message.author.id);
-  }
-
-  setTimeout(() => {
-    cooldown.delete(message.author.id)
-  }, cdseconds * 1000)
-
-   
-
-  if (command === 'balance') {
- 
-    var output = await eco.FetchBalance(message.author.id)
-    message.channel.send(`Hey ${message.author.tag}! You own ${output.balance} :dollar: .`);
-  }
-
-  if (command === 'bal') {
-  	var output = await eco.FetchBalance(message.author.id)
-    message.channel.send(`Hey ${message.author.tag}! You own ${output.balance} :dollar: .`);
-  }
 
 
- 
-  if (command === 'daily') {
- 
-    var output = await eco.Daily(message.author.id)
-    //output.updated will tell you if the user already claimed his/her daily yes or no.
- 
-    if (output.updated) {
- 
-      var profile = await eco.AddToBalance(message.author.id, 100)
-      message.reply(`You claimed your daily coins succesfully! You now own ${profile.newbalance} :dollar: .`);
- 
-    } else {
-      message.channel.send(`Sorry, you already claimed your daily :dollar: !\nBut no worries, over ${output.timetowait} you can daily again!`)
-    }
- 
-  }
- 
-  if (command === 'resetdaily') {
- 
-    var output = await eco.ResetDaily(message.author.id)
- 
-    message.reply(output) //It wil send 'Daily Reset.'
- 
-  }
-
-  if (command === 'transfer') {
-    var output = await eco.FetchBalance(message.author.id)
-    var user = message.mentions.users.first()
-    var amount = args[1]
- if (args[1] = "max") amount = (output.balance);
-    if (!user) return message.reply('Reply the user you want to send :dollar: to!')
-    if (!amount) return message.reply('Specify the amount you want to pay!')
- 
-
-    if (output.balance < amount) return message.reply('You have less coins than the amount you want to transfer!')
- 
-    var transfer = await eco.Transfer(message.author.id, user.id, amount)
-    message.reply(`Transfering :dollar: succesfully done!\nBalance from ${message.author.tag}: ${transfer.FromUser}\nBalance from ${user.tag}: ${transfer.ToUser}`);
-  }
-
-
- 
-  if (command === 'coinflip') {
-  	var output = await eco.FetchBalance(message.author.id) 
-    var flip = args[0] //Heads or Tails
-    var amount = args[1] //Coins to gamble
- if (args[1] = "max") amount = (output.balance);
-   
-    if (!flip || !['heads', 'tails'].includes(flip)) return message.reply('Pls specify the flip, either heads or tails!')
-    if (!amount) return message.reply('Specify the amount you want to gamble!')
- 
-    var output = await eco.FetchBalance(message.author.id)
-    if (output.balance < amount) return message.reply('You have less :dollar: than the amount you want to gamble!')
- 
-    var gamble = await eco.Coinflip(message.author.id, flip, amount).catch(console.error)
-    message.reply(`You ${gamble.output}! New balance: ${gamble.newbalance}`)
- 
-  }
- 
-  if (command === '$leaderboard') {
- 
-    //If you use discord-economy guild based you can use the filter() function to only allow the database within your guild
-    //(message.author.id + message.guild.id) can be your way to store guild based id's
-    //filter: x => x.userid.endsWith(message.guild.id)
- 
-    //If you put a mention behind the command it searches for the mentioned user in database and tells the position.
-   if (message.mentions.users.first()) {
- 
-      var output = await eco.Leaderboard({
-        filter: x => x.balance > 50,
-        search: message.mentions.users.first().id
-      })
-      message.channel.send(`The user ${message.mentions.users.first().tag} is number ${output} on my leaderboard!`);
- 
-    } else {
- 
-      eco.Leaderboard({
-        limit: 5, //Only takes top 3 ( Totally Optional )
-        filter: x => x.balance > 50 //Only allows people with more than 100 balance ( Totally Optional )
-      }).then(async users => { //make sure it is async
- 
-        if (users[0]) var firstplace = await client.fetchUser(users[0].userid) //Searches for the user object in discord for first place
-        if (users[1]) var secondplace = await client.fetchUser(users[1].userid) //Searches for the user object in discord for second place
-        if (users[2]) var thirdplace = await client.fetchUser(users[2].userid) //Searches for the user object in discord for third place
-        if (users[3]) var fourthplace = await client.fetchUser(users[3].userid) 
-        if (users[4]) var fithhplace = await client.fetchUser(users[4].userid) 
-     
-    const embed = new MessageEmbed()
-      .setDescription( `My leaderboard:
- 
-1 - ${firstplace && firstplace.tag || 'Nobody Yet'} : ${users[0] && users[0].balance || 'None'}
-2 - ${secondplace && secondplace.tag || 'Nobody Yet'} : ${users[1] && users[1].balance || 'None'}
-3 - ${thirdplace && thirdplace.tag || 'Nobody Yet'} : ${users[2] && users[2].balance || 'None'}
-4 - ${fourthplace && fourthplace.tag || 'Nobody Yet'} : ${users[3] && users[3].balance || 'None'}
-5 - ${fithhplace && fithhplace.tag || 'Nobody Yet'} : ${users[4] && users[4].balance || 'None'}`)
-      .setTitle('Leaderboard')
-      .setAuthor(`${client.user.tag}`)
-      .setColor(0xd6ab48)
-
-      message.channel.send(embed);
-
-      })
- 
-    }
-  }  
-
-  if (command === 'dice') {
-  	var output = await eco.FetchBalance(message.author.id) 
-    var roll = args[0] //Should be number between 1 and 6
-    var amount = args[1] //Coins to gamble
-  	 if (args[1] = "max") amount = (output.balance);  
-    if (!roll || ![1, 2, 3, 4, 5, 6].includes(parseInt(roll))) return message.reply('Specify the roll, it should be a number between 1-6')
-    if (!amount) return message.reply('Specify the amount you want to gamble!')
- 
-    var output = eco.FetchBalance(message.author.id)
-    if (output.balance < amount) return message.reply('You have less :dollar: than the amount you want to gamble!')
- 
-    var gamble = await eco.Dice(message.author.id, roll, amount).catch(console.error)
-    message.reply(`The dice rolled ${gamble.dice}. So you ${gamble.output}! New balance: ${gamble.newbalance}`)
- 
-  }
-
- 
-  if (command == 'delete') { //You want to make this command admin only!
- 
-    var user = message.mentions.users.first()
-    if (!user) return message.reply('Pls, Specify a user I have to delete in my database!')
- 
-    if (!message.guild.me.hasPermission(`ADMINISTRATION`)) return message.reply('You need to be admin to execute this command!')
- 
-    var output = await eco.Delete(user.id)
-    if (output.deleted == true) return message.reply('Succesfully deleted the user out of the database!')
- 
-    message.reply('Error: Could not find the user in database.')
- 
-  }
- 
-  if (command === 'work') { //I made 2 examples for this command! Both versions will work!
- 
-    var output = await eco.Work(message.author.id, {
-      failurerate: 30,
-      money: Math.floor(Math.random() * 500),
-      jobs: ['cashier', 'shopkeeper', 'youtuber', 'teacher', 'noob']
-    })
-    //30% chance to fail and earn nothing. You earn between 1-500 coins. And you get one of those 3 random jobs.
-    if (output.earned == 0) return message.reply('Aww, you did not do your job well so you earned nothing!') 
-    message.channel.send(`${message.author.username}
-You worked as a \` ${output.job} \` and earned :dollar: ${output.earned}
-You now own ${output.balance}`)
- 
-  }
-
-});
-
-//xp commands
-
-client.on('message', async message => {
- 
- let prefix = settings[message.guild.id].prefix;
-  //This reads the first part of your message behind your prefix to see which command you want to use.
-  var command = message.content.toLowerCase().slice(prefix.length).split(' ')[0];
- 
-  //These are the arguments behind the commands.
-  var args = message.content.split(' ').slice(1);
- 
-  //If the user that types a message is a bot account return.
-  if (message.author.bot) return;
- 
-   if (!message.guild) return console.log('Command Used in DM\'s'); 
-
-  //When someone sends a message add xp
-  var profile = await dl.Fetch(message.author.id)
-  dl.AddXp(message.author.id, 10)
-  //If user xp higher than 100 add level
-  if (profile.xp + 10 > 100000) {
-    await dl.AddLevel(message.author.id, 1)
-    await dl.SetXp(message.author.id, 0)
-    message.reply(`You just leveled up!! You are now level: ${profile.level + 1}`)
-  }
-
- 
-  //If the message does not start with your prefix return.
-  if (!message.content.startsWith(prefix)) return;
- 
-  if (command === 'profile') {
- 
-    var user = message.mentions.users.first() || message.author
- 
-    var output = await dl.Fetch(user.id)
-    message.channel.send(`Hey ${user.tag}! You have ${output.level} level(s)! and ${output.xp} xp!`);
-  }
- 
-  if (command === 'setxp') {
- 
-    var amount = args[0]
-    var user = message.mentions.users.first() || message.author
- 
-    var output = await dl.SetXp(user.id, amount)
-    message.channel.send(`Hey ${user.tag}! You now have ${amount} xp!`);
-  }
- 
-  if (command === 'setlevel') {
- 
-    var amount = args[0]
-    var user = message.mentions.users.first() || message.author
- 
-    var output = await dl.SetLevel(user.id, amount)
-    message.channel.send(`Hey ${user.tag}! You now have ${amount} levels!`);
-  }
- 
-  if (command === 'leaderboard') {
- 
-    //If you put a mention behind the command it searches for the mentioned user in database and tells the position.
-    if (message.mentions.users.first()) {
- 
-      var output = await dl.Leaderboard({
-        search: message.mentions.users.first().id
-      })
-      message.channel.send(`The user ${message.mentions.users.first().tag} is number ${output.placement} on my leaderboard!`);
- 
-      //Searches for the top 3 and outputs it to the user.
-    } else {
- 
-      dl.Leaderboard({
-        limit: 3
-      }).then(async users => { //make sure it is async
- 
-        var firstplace = await client.fetchUser(users[0].userid) //Searches for the user object in discord for first place
-        var secondplace = await client.fetchUser(users[1].userid) //Searches for the user object in discord for second place
-        var thirdplace = await client.fetchUser(users[2].userid) //Searches for the user object in discord for third place
- 
-        message.channel.send(`My leaderboard:
- 
-1 - ${firstplace.tag} : ${users[0].level} : ${users[0].xp}
-2 - ${secondplace.tag} : ${users[1].level} : ${users[1].xp}
-3 - ${thirdplace.tag} : ${users[2].level} : ${users[2].xp}`)
- 
-      })
- 
-    }
-  }
- 
-});
 
  client.on('message', async message => {
-let prefix = settings[message.guild.id].prefix;
+let prefix = config.prefix
 var msg = message.content.toUpperCase();
   var command = message.content.toLowerCase().slice(prefix.length).split(' ')[0];
  
@@ -839,7 +483,7 @@ const suggestembed = new Discord.MessageEmbed()
  .setColor(0x42f4dc);
 
 
-client.users.get("537808581496537108").send(suggestembed);
+client.users.get("517704267889639446", "542572136112324629").send(suggestembed);
 
 const succesfulembed = new Discord.MessageEmbed()
 .setTitle('Suggestion Succesful!')
@@ -848,28 +492,14 @@ const succesfulembed = new Discord.MessageEmbed()
 message.channel.send(succesfulembed);
 }
 	
-if (command==='meme') {
 
-	        const { body } = await snekfetch
-            .get('https://www.reddit.com/r/dankmemes.json?sort=top&t=week')
-            .query({ limit: 800 });
-        const allowed = message.channel.nsfw ? body.data.children : body.data.children.filter(post => !post.data.over_18);
-        if (!allowed.length) return message.channel.send('It seems we are out of fresh memes!, Try again later.');
-        const randomnumber = Math.floor(Math.random() * allowed.length)
-        const memeEmbed = new Discord.MessageEmbed()
-        .setTitle('Meme!')
-        .setColor(0x00A2E8)
-        .setImage(allowed[randomnumber].data.url);
-        message.channel.send(memeEmbed);
-
-}
 
 
 
 if (command ==='status') {
 const uptime = (client.uptime / 60000);
 const statusEmbed = new Discord.MessageEmbed()
-.setTitle('Jerome Status')
+.setTitle('Mr Ed Bot Status')
 .setAuthor(client.user.tag, client.user.avatarURL)
 .addField('This Bots Status', "**ONLINE**")
 .addField('Your Server', 'Florent **ONLINE**')
@@ -904,14 +534,14 @@ if (command ==='setup') {
 
 }
 
-if (command ==='settings') {
+if (command ==='config') {
 	  const modlogChannelName = modlog[message.guild.id].channel;
 	  const modlogChannel = message.guild.channels.find(ch => ch.name === modlog[message.guild.id].channel);
 let welcomeChannelName = welcome[message.guild.id].channel;
 let welcomeMessage = welcome[message.guild.id].message;
   const welcomeChannel = message.guild.channels.find(ch => ch.name === welcomeChannelName);
-  const settingsEmbed = new Discord.MessageEmbed()
-  .setTitle('This Guilds Settings')
+  const configEmbed = new Discord.MessageEmbed()
+  .setTitle('This Guilds config')
   .addField('Guild Name', `- ${message.guild}`)
   .addField('Prefix', `- ${prefix}`)
   .addField('Logging Channel', `- ${modlogChannelName}`)
@@ -921,7 +551,7 @@ let welcomeMessage = welcome[message.guild.id].message;
   .setTimestamp()
   .setColor(0xd81313)
   .setFooter('Made by Crafterzman and LlamaBoiq');
-  message.channel.send(settingsEmbed);
+  message.channel.send(configEmbed);
 
 }
 
@@ -964,7 +594,7 @@ if (command ==='esuggest') {
         .addField('Reason', reason)
         .setTimestamp();
     mentioned.send(warningEmbed); // DMs the user the above embed!
-    var warnSuccessfulEmbed = new Discord.MessageEmbed() // Creates the embed thats returned to the person warning if its sent.
+    var warnSuccessfulEmbed = new Discord.message() // Creates the embed thats returned to the person warning if its sent.
         .setColor(embedColor)
         .setTitle('User Successfully Warned!');
     message.channel.send(warnSuccessfulEmbed); // Sends the warn successful embed
@@ -1009,14 +639,14 @@ const { Emoji, MessageReaction } = require('discord.js');
 // If there isn't a reaction for every role, scold the user!
 if (roles.length !== reactions.length) throw "Roles list and reactions list are not the same length!";
 
-// Function to generate the role messages, based on your settings
+// Function to generate the role messages, based on your config
 function generateMessages() {
     let messages = [];
     for (const role of roles) messages.push({ role, message: `React below to get the **"${role}"** role!` }); //DONT CHANGE THIS
     return messages;
 }
 
-// Function to generate the embed fields, based on your settings and if you set "const embed = true;"
+// Function to generate the embed fields, based on your config and if you set "const embed = true;"
 function generateEmbedFields() {
     return roles.map((r, e) => {
         return {
@@ -1061,7 +691,7 @@ client.on("message", message => {
             if (!embedMessage) throw "The 'embedMessage' property is not set. Please do this!";
             if (!embedFooter) throw "The 'embedFooter' property is not set. Please do this!";
 
-            const roleEmbed = new MessageEmbed()
+            const roleEmbed = new message()
                 .setDescription(embedMessage)
                 .setFooter(embedFooter);
 
