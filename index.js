@@ -222,7 +222,7 @@ if (message.content === '<@547978397163192320> prefix') {
  if (message.content === `${prefix}help`) {	
   	if (message.author.bot) return;
    if (!message.guild) return console.log('Command Used in DM\'s');  
-  const embed = new RichEmbed()
+  const embed = new MessageEmbed()
   .setAuthor(`${client.user.tag}`)
   .setDescription(`**Your server prefix is \`${prefix}\`**`)
   .addField('Money Commands',`
@@ -393,7 +393,7 @@ let prefix = settings[message.guild.id].prefix;
 
   await(tomute.addRole(muterole.id));
   message.reply(`<@${tomute.id}> has been muted for ${ms(ms(mutetime))}`);
-var muteembed = new Discord.RichEmbed()
+var muteembed = new Discord.MessageEmbed()
 .setTitle('Member Muted')
 .setAuthor(client.user.tag, client.user.avatarURL)
 .addField('Moderator', message.author)
@@ -414,7 +414,7 @@ client.on("messageDelete", (messageDelete) => {
 let modlogName = modlog[messageDelete.guild.id].channel;
   const modlogChannel = messageDelete.guild.channels.find(ch => ch.name === modlogName);
   if (!modlogChannel) return;
-    const embed = new RichEmbed()
+    const embed = new MessageEmbed()
     .setTitle(`Message Deleted in #${messageDelete.channel.name}`)
     .setColor(0xd81313)
     .addField('Message', messageDelete.content) 
@@ -519,7 +519,7 @@ client.on('message', async message => {
  
    if (!message.guild) return console.log('Command Used in DM\'s'); 
 
- var cooldownEmbed = new Discord.RichEmbed()
+ var cooldownEmbed = new Discord.MessageEmbed()
  .setTitle('Command Cooldown')
  .setAuthor(client.user.tag, client.user.avatarURL)
  .setTimestamp()
@@ -644,7 +644,7 @@ client.on('message', async message => {
         if (users[3]) var fourthplace = await client.fetchUser(users[3].userid) 
         if (users[4]) var fithhplace = await client.fetchUser(users[4].userid) 
      
-    const embed = new RichEmbed()
+    const embed = new MessageEmbed()
       .setDescription( `My leaderboard:
  
 1 - ${firstplace && firstplace.tag || 'Nobody Yet'} : ${users[0] && users[0].balance || 'None'}
@@ -815,7 +815,7 @@ var msg = message.content.toUpperCase();
    if (!args[0]) return message.reply('You didn\'t choose a title.');
    if (!args[1]) return message.reply('You didn\'t specify the announcement');	
     	message.delete();
-   const announceEmbed = new Discord.RichEmbed()
+   const announceEmbed = new Discord.MessageEmbed()
    .setAuthor(message.author.username, message.author.avatarURL)
    .setTitle(args[0])
    .setColor(0xd6ab48)
@@ -829,7 +829,7 @@ message.delete();
 if (!message.content.startsWith(prefix)) return;
 if (command ==='suggest') {
 message.delete();
-const suggestembed = new Discord.RichEmbed()
+const suggestembed = new Discord.MessageEmbed()
  .setTitle('Command Suggestion')
  .setAuthor(message.author.tag)
  .setThumbnail(message.author.avatarURL)
@@ -841,7 +841,7 @@ const suggestembed = new Discord.RichEmbed()
 
 client.users.get("537808581496537108").send(suggestembed);
 
-const succesfulembed = new Discord.RichEmbed()
+const succesfulembed = new Discord.MessageEmbed()
 .setTitle('Suggestion Succesful!')
 .setColor(0x42f4dc);
 
@@ -856,7 +856,7 @@ if (command==='meme') {
         const allowed = message.channel.nsfw ? body.data.children : body.data.children.filter(post => !post.data.over_18);
         if (!allowed.length) return message.channel.send('It seems we are out of fresh memes!, Try again later.');
         const randomnumber = Math.floor(Math.random() * allowed.length)
-        const memeEmbed = new Discord.RichEmbed()
+        const memeEmbed = new Discord.MessageEmbed()
         .setTitle('Meme!')
         .setColor(0x00A2E8)
         .setImage(allowed[randomnumber].data.url);
@@ -868,7 +868,7 @@ if (command==='meme') {
 
 if (command ==='status') {
 const uptime = (client.uptime / 60000);
-const statusEmbed = new Discord.RichEmbed()
+const statusEmbed = new Discord.MessageEmbed()
 .setTitle('Jerome Status')
 .setAuthor(client.user.tag, client.user.avatarURL)
 .addField('This Bots Status', "**ONLINE**")
@@ -885,7 +885,7 @@ message.channel.send(statusEmbed);
 
 
 if (command ==='setup') {
-	const setupEmbed = new Discord.RichEmbed()
+	const setupEmbed = new Discord.MessageEmbed()
 	.setTitle('Setup Help')
 	.addField('Welcome Messages', `
 		**Command:** \`${prefix}setup-welcome\`
@@ -910,7 +910,7 @@ if (command ==='settings') {
 let welcomeChannelName = welcome[message.guild.id].channel;
 let welcomeMessage = welcome[message.guild.id].message;
   const welcomeChannel = message.guild.channels.find(ch => ch.name === welcomeChannelName);
-  const settingsEmbed = new Discord.RichEmbed()
+  const settingsEmbed = new Discord.MessageEmbed()
   .setTitle('This Guilds Settings')
   .addField('Guild Name', `- ${message.guild}`)
   .addField('Prefix', `- ${prefix}`)
@@ -937,13 +937,13 @@ if (command ==='esuggest') {
     if (command ==='warn') {
     var embedColor = '#e5f442' // Change this to change the color of the embeds!
     
-    var missingPermissionsEmbed = new Discord.RichEmbed() // Creates the embed thats sent if the user is missing permissions
+    var missingPermissionsEmbed = new Discord.MessageEmbed() // Creates the embed thats sent if the user is missing permissions
         .setColor(embedColor)
         .setAuthor(message.author.username, message.author.avatarURL)
         .setTitle('Insufficient Permissions!')
         .setDescription('You need the `MANAGE_MESSAGES` permission to use this command!')
         .setTimestamp();
-    var missingArgsEmbed = new Discord.RichEmbed() // Creates the embed thats sent if the command isnt run right
+    var missingArgsEmbed = new Discord.MessageEmbed() // Creates the embed thats sent if the command isnt run right
         .setColor(embedColor)
         .setAuthor(message.author.username, message.author.avatarURL)
         .setTitle('Missing Arguments!')
@@ -956,7 +956,7 @@ if (command ==='esuggest') {
     if(!reason) return message.channel.send(missingArgsEmbed); // Triggers if the user dosn't provide a reason for the warning
   const modlogChannel = message.guild.channels.find(ch => ch.name === modlog[message.guild.id].channel);
     if(!modlogChannel) return;
-    var warningEmbed = new Discord.RichEmbed() // Creates the embed that's DM'ed to the user when their warned!
+    var warningEmbed = new Discord.MessageEmbed() // Creates the embed that's DM'ed to the user when their warned!
         .setColor(embedColor)
         .setAuthor(message.author.username, message.author.avatarURL)
         .setTitle(`You've been warned in ${message.guild.name}`)
@@ -964,12 +964,12 @@ if (command ==='esuggest') {
         .addField('Reason', reason)
         .setTimestamp();
     mentioned.send(warningEmbed); // DMs the user the above embed!
-    var warnSuccessfulEmbed = new Discord.RichEmbed() // Creates the embed thats returned to the person warning if its sent.
+    var warnSuccessfulEmbed = new Discord.MessageEmbed() // Creates the embed thats returned to the person warning if its sent.
         .setColor(embedColor)
         .setTitle('User Successfully Warned!');
     message.channel.send(warnSuccessfulEmbed); // Sends the warn successful embed
     message.delete(); // Deletes the command
-var warninglogEmbed = new Discord.RichEmbed() // Creates the embed that's DM'ed to the user when their warned!
+var warninglogEmbed = new Discord.MessageEmbed() // Creates the embed that's DM'ed to the user when their warned!
         .setColor(embedColor)
         .setAuthor(message.author.username, message.author.avatarURL)
         .setTitle(`Warn!`)
@@ -1061,7 +1061,7 @@ client.on("message", message => {
             if (!embedMessage) throw "The 'embedMessage' property is not set. Please do this!";
             if (!embedFooter) throw "The 'embedFooter' property is not set. Please do this!";
 
-            const roleEmbed = new RichEmbed()
+            const roleEmbed = new MessageEmbed()
                 .setDescription(embedMessage)
                 .setFooter(embedFooter);
 
