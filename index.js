@@ -878,7 +878,7 @@ const statusEmbed = new Discord.RichEmbed()
 .addField('Uptime', `\`${uptime} mins.\``)
 .setColor(0x43ce1c)
 .setTimestamp()
-.setFooter('Made by OSXNuggets 155');
+.setFooter('Made by Crafterzman and LlamaBoiq');
 message.channel.send(statusEmbed);
 
 }
@@ -899,7 +899,7 @@ if (command ==='setup') {
 	.setColor(0x42f4dc)
 	.setAuthor(client.user.username, client.user.avatarURL)
 	.setTimestamp()
-	.setFooter('Made by OSX Nuggets');
+	.setFooter('Made by Crafterzman and LlamaBoiq');
 	message.channel.send(setupEmbed);
 
 }
@@ -920,7 +920,7 @@ let welcomeMessage = welcome[message.guild.id].message;
   .setAuthor(client.user.username, client.user.avatarURL)
   .setTimestamp()
   .setColor(0xd81313)
-  .setFooter('Made by OSXNuggets');
+  .setFooter('Made by Crafterzman and LlamaBoiq');
   message.channel.send(settingsEmbed);
 
 }
