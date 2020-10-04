@@ -14,6 +14,9 @@ module.exports = {
         .addField('`|kick`', 'Kicks a member from your server via mention or ID')
         .addField('`|ban`', 'Bans a member from your server via mention or ID')
         .addField('`|clear`', 'Purges messages')
+        .addField('`|warn`', 'Warn a user')
+        .addField('`|delwarns`', 'Clear a users warnings')
+        .addField('`|warnings`', 'Checks a users warnings')
         .setTimestamp()
 
         const fun = new Discord.MessageEmbed()
