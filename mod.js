@@ -50,7 +50,7 @@ let stats = {
     bots: "<ID>"
 }
 
-
+    
 
 client.on('guildMemberAdd', member => {
     if(member.guild.id !== stats.serverID) return;
@@ -90,4 +90,4 @@ client.on("message", async message => {
     }
 })
 
-client.login(token);
+client.login(token)
